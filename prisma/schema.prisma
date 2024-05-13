@@ -1,0 +1,46 @@
+// schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  
+}
+
+
+model User {
+  id            String       @default(cuid()) @id
+  name          String?
+  email         String   @unique
+  password      String
+  createdAt     DateTime  @default(now()) @map(name: "created_at")
+  updatedAt     DateTime  @updatedAt @map(name: "updated_at")  
+  @@map(name: "users")
+  forms          Form[]
+}
+
+// Define the Form model
+model Form {
+  id          String  @id @default(cuid())
+  title       String
+  description String?
+  fields      Json[]
+  user        User    @relation(fields: [userId], references: [id])
+  userId      String
+  submissions FormSubmission[]
+  @@map(name: "form")
+}
+
+
+
+// Define the FormSubmission model
+model FormSubmission {
+  id       String  @id @default(cuid())
+  form     Form    @relation(fields: [formId], references: [id])
+  formId   String
+  data     Json
+  @@map(name: "formSubmission")
+}
