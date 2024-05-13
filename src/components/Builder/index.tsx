@@ -3,9 +3,12 @@ import TitleContainer from '../Form/TitleContainer'
 
 const Builder = ({ handleDragOver, handleDrop, widgets }: any) => {
     return (
-        <div className='mt-20 flex flex-col gap-5 '>
+        <div
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            className='mt-20 flex flex-col gap-5 '>
             <TitleContainer />
-            
+
             {
                 widgets.map((w: any, i: number) => {
                     return (
@@ -18,8 +21,7 @@ const Builder = ({ handleDragOver, handleDrop, widgets }: any) => {
 
 
             <div
-                onDragOver={handleDragOver}
-                onDrop={handleDrop}
+
                 className='border-dashed border-gray-400 bg-gray-100 border-2 rounded-lg w-full p-16 text-[20px] text-gray-500 text-center cursor-pointer'>
                 Drag & Drop a Form Component
             </div>
