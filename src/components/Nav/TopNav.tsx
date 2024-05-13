@@ -8,7 +8,7 @@ const TopNav = () => {
     const navItems: NavItems[] = [
         {
             title: "Dashboard",
-            link: "/"
+            link: "/dashboard"
         },
         {
             title: "Builder",

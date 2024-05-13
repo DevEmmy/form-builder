@@ -4,6 +4,9 @@ import { RiCalendarLine, RiCheckboxLine, RiFile3Line, RiFileUploadLine, RiMailLi
 import { } from "react-icons/hi2"
 import ClickableInput from '../Form/ClickableInput';
 import MultiChoice from '../Form/MultiChoice';
+import Email from '../Form/Email';
+import Phone from '../Form/Phone';
+import ShortText from '../Form/ShortText';
 
 export const components = [
     {
@@ -14,12 +17,12 @@ export const components = [
     {
         title: "Email",
         icon: <RiMailLine />,
-        component: <ClickableInput type='text' placeholder='Click to Add description' size='small'/>
+        component: <Email />
     },
     {
         title: "Phone",
         icon: <RiPhoneLine />,
-        component: <ClickableInput type='text' placeholder='Click to Add description' size='small'/>
+        component: <Phone />
     },
     {
         title: "Date",
@@ -34,7 +37,7 @@ export const components = [
     {
         title: "Short Text",
         icon: <RiText />,
-        component: <ClickableInput type='text' placeholder='Click to Add description' size='small'/>
+        component: <ShortText />
     },
     {
         title: "Long Text",
