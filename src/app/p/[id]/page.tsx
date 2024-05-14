@@ -1,73 +1,57 @@
 "use client"
-import { getEachForm } from '@/helper/requests';
-import { FormElement } from '@/providers/FormBuilderProvider';
-import React, { useEffect, useState } from 'react'
+import { FormElement } from '@/providers/FormBuilderProvider'
+import React, { useEffect, useState } from 'react';
+// import { useRouter } from 'next/router';
+import { createFormSubmission, getEachForm } from '@/helper/requests';
+import { useRouter } from 'next/navigation';
+import ViewForm from '@/components/Form/ViewForm';
+import Responses from '@/components/Form/Responses';
 
-const page = ({ params }: any) => {
+const Page = ({ params }: any) => {
     const { id } = params;
-    const [form, setForm] = useState<any>({})
 
-    const fetch = async (id: string) => {
-        let response = await getEachForm(id)
-        console.log(response)
-        setForm(response)
-    }
 
-    useEffect(() => {
-        fetch(id)
+    const [view, setView] = useState<number>(0)
+    const [isCheckSubmission, setIsCheckSubmission] = useState(false)
 
-    }, [id])
+    const tabs = [
+        {
+            title: "View Form",
+            component: <ViewForm id={id} setIsCheckSubmission={setIsCheckSubmission} />
+        },
+        {
+            title: "Responses",
+            component: <Responses id={id}/>
+        }
+    ]
+
+    const [element, setElement] = useState<any>()
+
+
+
+
     return (
         <>
-            {
-                form ?
-                    <div className='w-2/5 m-auto flex flex-col gap-10 my-20'>
-                        <div className='container border-t-8  border-t-primary1 flex flex-col gap-2'>
-                            <p className="input-large">
-                                {form.title}
-                            </p>
-                            <p className='input-small'>
-                                {form.description}
-                            </p>
-                        </div>
-
-                        {
-                            form.fields?.map((field: FormElement, i: number) => {
-                                return (
-                                    <div className='container flex flex-col gap-2'>
-                                        <label htmlFor={field.label}>{field.label}</label>
-                                        {
-                                            field.type !== "select"
-                                                ?
-                                                <input type={field.type} name={field.label} className='border-b'/>
-                                                :
-                                              <>
-                                                    {
-                                                        field.option?.map((op: string, j) => {
-                                                            return (
-                                                                <div className='flex-center gap-2 '>
-                                                                    <input type="radio" name={field.label} value={op}/>
-                                                                    <label htmlFor={field.label}>{op}</label>
-                                                                </div>
-                                                            )
-                                                        })
-                                                    }
-                                             </>   
-                                        }
-                                    </div>
-                                )
-                            })
-                        }
-
-                        <button className='w-full p-4 rounded-md text-white bg-primary1'>
-                            Submit
-                        </button>
+            <div className='my-20 w-2/5 m-auto'>
+                {
+                    isCheckSubmission &&
+                    <div className='flex-all-center gap-10 tab my-5'>
+                       {
+                        tabs.map((tab, i: number)=>{
+                            return(
+                                <div onClick={()=> setView(i)} className={`${i == view && "!bg-primary1 !text-white"}`}>
+                                    {tab.title}
+                                </div>
+                            )
+                        })
+                       }
                     </div>
-                    :
-                    <p>Loading...</p>
-            }
+                }
+
+                {tabs[view].component}
+            </div>
         </>
     )
 }
 
-export default page
+export default Page;

@@ -12,7 +12,7 @@ const MultiChoice = ({ initialQuestion, initialOptions, onChange }: MultiChoiceP
 
     let [data, setData] = useState<FormElement>({
         label: "Add Question",
-        type: "select"
+        type: "radio"
     })
     const { addFormElement } = useContext(FormBuilderContext);
 
