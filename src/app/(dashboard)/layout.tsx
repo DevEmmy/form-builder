@@ -1,4 +1,5 @@
 import TopNav from "@/components/Nav/TopNav";
+import { AuthProvider } from "@/providers/AuthProvider";
 
 export default function RootLayout({
     children,
@@ -8,8 +9,10 @@ export default function RootLayout({
     return (
 
         <>
-        <TopNav />
-            {children}
+            <AuthProvider>
+                <TopNav />
+                {children}
+            </AuthProvider>
         </>
 
 
