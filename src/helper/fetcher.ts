@@ -1,17 +1,17 @@
 import axios from "axios"
 
-export const setConfig = ()=>{
-    let token = localStorage.getItem("token")
-    return {
-        headers:{
-            "Authorization": `Bearer ${token}`
-        }
+const getToken = () => {
+    if (typeof window !== 'undefined') {
+        let token = localStorage.getItem("token");
+        return token;
     }
+    return null; // Or handle it in whatever way suits your application
 }
+
 
 export const axiosConfig = axios.create({
     baseURL: "/api/",
     headers:{
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
+        "Authorization": `Bearer ${getToken()}`
     }
 })

@@ -1,9 +1,8 @@
 // Notice from where NextResponse is imported:
 import { NextResponse } from "next/server";
+import prisma from "../../../../lib/prisma";
 
-import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
 
 // Notice the funciton definiton:
 export async function GET(req: any) {
