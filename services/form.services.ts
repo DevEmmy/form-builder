@@ -16,3 +16,12 @@ export async function getForms(userId: string){
   })
   return forms
 }
+
+export async function getEachForm(id: string){
+  const form = await prisma.form.findUnique({
+    where:{
+      id: id
+    }
+  })
+  return form
+}
