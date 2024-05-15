@@ -1,31 +1,46 @@
 "use client"
-import Builder from '@/components/Builder'
-import ListOfForms, { components } from '@/components/Nav/ListOfForms'
-import React, { useState } from 'react'
+import FormDisplay from '@/components/Shared/FormDisplay'
+import { getForms } from '@/helper/requests'
+import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
+import { HiPlus } from 'react-icons/hi'
 
 const page = () => {
-  const [widgets, setWidgets] = useState<any>([]);
+  const [form, setForms] = useState([]);
 
-  const handleDrag = (e: React.DragEvent, widgetElement: any)=>{
-      e.dataTransfer.setData("widgetElement", widgetElement);
-      console.log("drag")
+  const fetcher = async ()=>{
+    let forms = await getForms();
+    setForms(forms);
   }
-
-  const handleDrop = (e: React.DragEvent)=>{
-      let widgetElement: any = e.dataTransfer.getData("widgetElement")
-      widgetElement = components[widgetElement].component
-      setWidgets([...widgets, widgetElement]);
-  }
-
-  const handleDragOver = (e: React.DragEvent)=>{
-      e.preventDefault()
-  }
-
+  
+  useEffect(()=>{
+    fetcher();
+  },[])
   return (
-    <div className='grid grid-cols-[1fr_2fr_1fr] gap-10'>
-      <ListOfForms handleDrag={handleDrag}/>
-      <Builder handleDrop ={handleDrop} handleDragOver={handleDragOver} widgets={widgets}/>
-      <div />
+    <div className='px-[20%] my-20 flex gap-5 flex-col'>
+      
+        <Link href={"/new"} className='flex-all-center flex-col gap-2 w-fit p-5 border'>
+          <HiPlus size='50' />
+          <p>Create Form</p>
+        </Link>
+      
+      <p className='text-[20px] font-[600] '>Recent Forms</p>
+
+      {
+        form.length > 0
+        ?
+        <div className='grid grid-cols-4 gap-5'>
+        {
+          form.map((item, i) => {
+            return (
+              <FormDisplay form={item} />
+            )
+          })
+        }
+      </div>
+      :
+      <p>You have not created any form</p>
+      }
     </div>
   )
 }

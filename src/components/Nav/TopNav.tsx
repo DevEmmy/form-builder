@@ -1,24 +1,32 @@
-import React from 'react'
+"use client"
+import React, { useContext, useEffect, useState } from 'react'
 import { NavItems } from '../interfaces'
 import Link from 'next/link'
-
+import { useAuth } from '@/providers/AuthProvider'
+import useLocalStorage from "use-local-storage";
 
 
 const TopNav = () => {
+
+    const {logout} = useAuth()
+
     const navItems: NavItems[] = [
         {
             title: "Dashboard",
-            link: "/dashboard"
+            link: "/"
         },
         {
-            title: "Builder",
-            link: "/builder"
-        },
-        {
-            title: "Responses",
-            link: "/responses"
+            title: "New Form",
+            link: "/new"
         },
     ]
+
+    const [email, setEmail] = useState<string | null>();
+
+    useEffect(()=>{
+        setEmail(localStorage.getItem("email"));
+    }, [])
+
     return (
         <div className='flex-center justify-between py-5 px-[5%] bg-primary1 text-white'>
             <div className='flex divide-x pr-10 gap-10'>
@@ -43,9 +51,11 @@ const TopNav = () => {
                 <img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Spider-Man.jpg" alt="" className='size-[60px] rounded-full' />
 
                 <div>
-                    <p className='text-[18px] font-[500]'>Emmanuel Olaosebikan</p>
-                    <p className='text-sm'>eolaosebikan60@gmail.com</p>
+                    {/* <p className='text-[18px] font-[500]'>Emmanuel Olaosebikan</p> */}
+                    <p className=''>{email}</p>
+                    <p className='text-sm underline cursor-pointer' onClick={logout}>logout</p>
                 </div>
+                
                 
             </div>
         </div>

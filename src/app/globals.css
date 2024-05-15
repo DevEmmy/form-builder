@@ -62,3 +62,7 @@ form input{
 .tab div{
   @apply cursor-pointer py-3 px-5 rounded-md
 }
+
+.auth input{
+  @apply w-full
+}

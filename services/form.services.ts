@@ -9,6 +9,7 @@ export async function createForm(data: any) {
   }
 
 export async function getForms(userId: string){
+  console.log(userId)
   const forms = await prisma.form.findMany({
     where:{
       userId: userId

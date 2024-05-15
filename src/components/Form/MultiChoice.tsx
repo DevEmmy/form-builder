@@ -46,6 +46,8 @@ const MultiChoice = ({ initialQuestion, initialOptions, onChange }: MultiChoiceP
         addFormElement(data)
     }
 
+    const [done2, setDone] = useState(false)
+
     return (
         <div className='flex flex-col gap-2'>
             <ClickableInput type="text" value={data.label} onChange={handleLabel} size='medium' placeholder='Click to edit question' />
@@ -57,9 +59,19 @@ const MultiChoice = ({ initialQuestion, initialOptions, onChange }: MultiChoiceP
                 </div>
             ))}
             <button onClick={addOption} className='bg-primary1 p-2 rounded-md text-white w-fit'>Add Option</button>
-            <div className='flex items-end justify-end px-5 py-2 rounded-md bg-primary1 w-fit text-white cursor-pointer' onClick={done}>
-                Done
-            </div>
+            {
+                !done2 
+                ?
+                    <div className='flex items-end justify-end px-5 py-2 rounded-md bg-primary1 w-fit text-white cursor-pointer' onClick={() => {addFormElement(data); setDone(true)}}>
+                        Done
+                    </div>
+
+                    :
+
+                    <div className='flex items-end justify-end px-5 py-2 rounded-md bg-red-600 w-fit text-white cursor-pointer'>
+                        Remove
+                    </div>
+            }
         </div>
     )
 }

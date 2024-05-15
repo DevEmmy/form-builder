@@ -15,20 +15,21 @@ export interface FormElement {
   option?: string[]
 
 }
-
 // Create the context with typed interfaces
-const FormBuilderContext = createContext<({
+const FormBuilderContext = createContext<{
   formData: FormData;
   addFormElement: (newElement: FormElement) => void;
-  updateFormDescription: ( updatedDescription: string) => void;
+  removeFormElement: (index: number) => void; // New function for removing form elements
+  updateFormDescription: (updatedDescription: string) => void;
   updateFormTitle: (updatedTitle: string) => void;
-})>({
+}>({
   formData: {
     title: '',
     description: '',
     fields: [],
   },
   addFormElement: () => {},
+  removeFormElement: () => {}, // Initialize the removeFormElement function
   updateFormTitle: () => {},
   updateFormDescription: () => {},
 });
@@ -38,15 +39,22 @@ const FormBuilderProvider: React.FC<{ children: React.ReactNode }> = ({ children
     title: '',
     description: '',
     fields: [],
-    
   });
 
   const addFormElement = (newElement: FormElement) => {
     setFormData((prevData) => ({ ...prevData, fields: [...prevData.fields, newElement] }));
   };
 
+  const removeFormElement = (index: number) => {
+    setFormData((prevData) => {
+      const newFields = [...prevData.fields];
+      newFields.splice(index, 1);
+      return { ...prevData, fields: newFields };
+    });
+  };
+
   const updateFormTitle = (updatedTitle: string) => {
-    setFormData((prevData) => ({ ...prevData, title: updatedTitle}));
+    setFormData((prevData) => ({ ...prevData, title: updatedTitle }));
   };
 
   const updateFormDescription = (updatedDescription: string) => {
@@ -54,7 +62,9 @@ const FormBuilderProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <FormBuilderContext.Provider value={{ formData, addFormElement, updateFormTitle, updateFormDescription }}>
+    <FormBuilderContext.Provider
+      value={{ formData, addFormElement, removeFormElement, updateFormTitle, updateFormDescription }}
+    >
       {children}
     </FormBuilderContext.Provider>
   );

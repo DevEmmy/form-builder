@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }: any) => {
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
+    if (token || token == undefined) {
       setIsAuthenticated(true);
     }
     else{
@@ -37,6 +37,7 @@ export const AuthProvider = ({ children }: any) => {
 
   const logout = () => {
     localStorage.removeItem('token');
+    router.push("/sign-in")
     setIsAuthenticated(false);
   };
 

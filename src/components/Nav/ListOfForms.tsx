@@ -25,35 +25,15 @@ export const components = [
         component: <Phone />
     },
     {
-        title: "Date",
-        icon: <RiCalendarLine />,
-        component: <ClickableInput type='text' placeholder='Click to Add description' size='small'/>
-    },
-    {
-        title: "Time",
-        icon: <RiTimeLine />,
-        component: <ClickableInput type='text' placeholder='Click to Add description' size='small'/>
-    },
-    {
-        title: "Short Text",
+        title: "Text",
         icon: <RiText />,
         component: <ShortText />
     },
-    {
-        title: "Long Text",
-        icon: <RiTextBlock />,
-        component: <ClickableInput type='text' placeholder='Click to Add description' size='small'/>
-    },
-    {
-        title: "File Upload",
-        icon: <RiFileUploadLine />,
-        component: <ClickableInput type='text' placeholder='Click to Add description' size='small'/>
-    },
-    {
-        title: "CheckBox",
-        icon: <RiCheckboxLine />,
-        component: <ClickableInput type='text' placeholder='Click to Add description' size='small'/>
-    },
+    // {
+    //     title: "Long Text",
+    //     icon: <RiTextBlock />,
+    //     component: <ClickableInput type='text' placeholder='Click to Add description' size='small'/>
+    // },
 ]
 
 const ListOfForms = ({handleDrag}: any) => {
@@ -71,9 +51,9 @@ const ListOfForms = ({handleDrag}: any) => {
                 <input type="search" name="" id="" placeholder='Search Components' />
             </div> */}
 
-            <div className='flex flex-col gap-3 my-5'>
+            <div className=' flex-col gap-3 my-5 items-start justify-start w-full px-3'>
                 <p>Form Components</p>
-                <div className='text-gray-400 grid  grid-cols-3 gap-3 text-center'>
+                <div className='text-gray-400 py-3 grid gap-3 grid-cols-2 text-center '>
                     {
                         components.map((item, i) => {
                             return (

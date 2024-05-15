@@ -1,20 +1,48 @@
+"use client"
+import { signUp } from '@/helper/requests';
 import Link from 'next/link'
-import React from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react'
 
-const page = () => {
+const Page = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter()
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Call your function to send the data
+    sendData({ email, password });
+  };
+
+  const sendData = async (data: { email: string, password: string }) => {
+    try {
+      signUp(data)
+      .then((token)=>{
+        if(token){
+          router.push("/")
+        }
+      })
+      setEmail('');
+      setPassword('');
+    } catch (error) {
+      console.error('Error sending data:', error);
+    }
+  };
+
   return (
     <div>
-      <div className='flex-all-center flex-col gap-5 h-[100vh]'>
+      <div className='flex-all-center flex-col gap-5 h-[100vh] w-1/3 m-auto'>
         <p className='text-[20px] font-[500]'>Sign up</p>
-        <form action="" className='flex gap-2 flex-col'>
-          <input type="email" />
-          <input type="password" name="" id="" />
-          <button className='bg-primary1 p-3 rounded-md text-white'>sign up</button>
+        <form onSubmit={handleSubmit} className='flex gap-2 flex-col auth w-full'>
+          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
+          <button type="submit" className='bg-primary1 p-3 rounded-md text-white'>Sign up</button>
         </form>
-        <p>I have an account already <Link className='text-primary1' href={"/sign-in"}>Sign in</Link></p>
+        <p>I have an account already <Link href="/sign-in" className='text-primary1'>Sign in</Link></p>
       </div>
     </div>
   )
 }
 
-export default page
+export default Page;
