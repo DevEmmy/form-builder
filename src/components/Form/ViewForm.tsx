@@ -53,7 +53,7 @@ const ViewForm = ({ id, setIsCheckSubmission }: Props) => {
                         {form.fields?.map((field: FormElement, i: number) => (
                             <div key={i} className='container flex flex-col gap-2'>
                                 <label htmlFor={field.label}>{field.label}</label>
-                                {field.type !== "select" ?
+                                {field.type !== "radio" ?
                                     <input type={field.type} name={field.label} className='border-b' onChange={handleChange} />
                                     :
                                     <>

@@ -62,7 +62,7 @@ const MultiChoice = ({ initialQuestion, initialOptions, onChange }: MultiChoiceP
             {
                 !done2 
                 ?
-                    <div className='flex items-end justify-end px-5 py-2 rounded-md bg-primary1 w-fit text-white cursor-pointer' onClick={() => {addFormElement(data); setDone(true)}}>
+                    <div className='flex items-end justify-end px-5 py-2 rounded-md bg-primary1 w-fit text-white cursor-pointer' onClick={() => {done(); setDone(true)}}>
                         Done
                     </div>
 
