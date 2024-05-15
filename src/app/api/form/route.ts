@@ -22,9 +22,9 @@ export async function POST(req: Request) {
     let form = await createForm(data);
     
     return NextResponse.json({ message: "Created", form });
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-    return NextResponse.json({ message: 'Error', error });
+    return NextResponse.json({ message: error.message, error }, {status: 400});
   }
 }
 
