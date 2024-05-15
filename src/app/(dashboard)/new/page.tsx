@@ -49,7 +49,7 @@ const page = () => {
         </button>
         {
           response &&
-          <CopyToClipboard text={`http://localhost:3000/p/${response?.id}`}
+          <CopyToClipboard text={`https://form-builder-emmy.vercel.app/p/${response?.id}`}
             onCopy={() => toast.success("Copied")}>
 
 
