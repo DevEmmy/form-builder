@@ -22,11 +22,18 @@ export async function POST(req: Request, res: NextApiResponse) {
       },
     });
 
-    let token = getToken(user.id, user.email)
+    if(user){
+      let token = getToken(user.id, user.email)
 
     return NextResponse.json({ message: 'User created successfully', user, token });
+    }
+    else{
+      return NextResponse.json({ message: 'This Email has been connected to a different account'});
+    }
+
+    
   } catch (error) {
     console.log(error)
-    return NextResponse.json({ message: 'Error creating user', error });
+    return NextResponse.json({ message: 'Error creating user', error }, {status: 400});
   }
 }

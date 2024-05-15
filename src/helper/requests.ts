@@ -6,10 +6,12 @@ export const createForm = async (data : any)=>{
         let response = await axiosConfig.post("form", data)
         console.log(response.data)
         let form = response.data.form;
+        toast.success(response.data.message)
         return form;
     }   
     catch(err: any){
         console.log(err)
+        toast.error("An error occured")
     }
 }
 
@@ -65,17 +67,20 @@ export const login = async (data: any)=>{
     try{
         let response = await axiosConfig.post("sign-in", data)
         let token = response.data.token;
-        if(token){
+        if(response.status == 200){
             toast.success(response.data.message)
             console.log(response.data.user.email)
             localStorage.setItem("email", response.data.user.email)
-        localStorage.setItem("token", token);
-        return token;
+            localStorage.setItem("token", token);
+            return token;
         }
-        return null
+        else{
+            // toast.error(response.data.message)
+            return null
+        }
     }
     catch(err: any){
-        toast.success(err.message)
+        toast.error(err.response.data.message)
     }
 }
 
@@ -84,15 +89,19 @@ export const signUp = async (data: any)=>{
     try{
         let response = await axiosConfig.post("sign-up", data)
         let token = response.data.token;
-        if(token){
+        if(response.status == 200){
             toast.success(response.data.message)
+            console.log(response.data.user.email)
             localStorage.setItem("email", response.data.user.email)
-        localStorage.setItem("token", token);
-        return token;
+            localStorage.setItem("token", token);
+            return token;
         }
-        return token;
+        else{
+            toast.error(response.data.message)
+            return null
+        }
     }
     catch(err: any){
-        toast.success(err.message)
+        toast.error(err.response.data.message)
     }
 }

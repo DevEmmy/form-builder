@@ -64,5 +64,5 @@ form input{
 }
 
 .auth input{
-  @apply w-full
+  @apply w-full border rounded-md
 }

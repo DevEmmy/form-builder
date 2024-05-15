@@ -16,14 +16,14 @@ export async function POST(req: Request, res: NextApiResponse) {
     });
 
     if (!user) {
-      return NextResponse.json({ message: 'User not found' });
+      return NextResponse.json({ message: 'User not found' }, {status: 400});
     }
 
     // Verify password
     const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
-      return res.json({ message: 'Invalid email or password' });
+      return NextResponse.json({ message: 'Invalid email or password' }, {status: 400});
     }
 
     let token = getToken(user.id, user.email)
@@ -32,6 +32,6 @@ export async function POST(req: Request, res: NextApiResponse) {
     return NextResponse.json({ message: 'Sign in successful', user, token });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: 'Error signing in', error });
+    return NextResponse.json({ message: 'Error signing in', error }, {status: 400});
   }
 }
