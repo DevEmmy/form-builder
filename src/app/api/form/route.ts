@@ -32,12 +32,17 @@ export async function POST(req: Request) {
 export async function GET(req: Request) {
   try {
     let user : any = await verifyToken(req); // Call verifyToken and handle errors
-
-    let forms = await getForms(user.id);
+    console.log(user)
+    if(user.id){
+      let forms = await getForms(user.id);
+      return NextResponse.json({ message: "Created", forms });
+    }
+    else{
+      return NextResponse.json({ message: 'User not found'}, {status: 400});
+    }
     
-    return NextResponse.json({ message: "Created", forms });
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ message: 'Error', error });
+    return NextResponse.json({ message: 'Error', error }, {status: 400});
   }
 }

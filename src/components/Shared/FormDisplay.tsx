@@ -5,7 +5,7 @@ import TimeAgo from 'react-timeago'
 
 const FormDisplay = ({ form }: any) => {
   return (
-    <Link href={`http://localhost:3000/p/${form.id}`}>
+    <Link href={`/p/${form.id}`}>
       <div className='border p-3 flex flex-col gap-2 cursor-pointer hover:shadow-xl transition-all'>
         <RiFile2Line className='w-full text-[200px] text-gray-400' />
         <div className='py-3 border-t'>

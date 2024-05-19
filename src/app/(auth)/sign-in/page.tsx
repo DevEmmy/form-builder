@@ -3,6 +3,7 @@ import { login } from '@/helper/requests';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
+import toast from 'react-hot-toast';
 
 const Page = () => {
   const [email, setEmail] = useState('');
@@ -17,16 +18,21 @@ const Page = () => {
 
   const sendData = async (data: { email: string, password: string }) => {
     try {
-      
-      login(data)
-      .then((token)=>{
-        if(token){
-          router.push("/")
-        }
-      })
-      // Reset form after submission
-      setEmail('');
-      setPassword('');
+      if (email.length == 0 || password.length == 0) {
+        toast.error("Kindly fill all fields")
+      }
+      else {
+        login(data)
+          .then((token) => {
+            if (token) {
+              router.push("/")
+            }
+          })
+        // Reset form after submission
+        setEmail('');
+        setPassword('');
+      }
+
     } catch (error) {
       console.error('Error sending data:', error);
     }

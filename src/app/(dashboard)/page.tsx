@@ -10,7 +10,10 @@ const page = () => {
 
   const fetcher = async ()=>{
     let forms = await getForms();
-    setForms(forms);
+    if(forms){
+      setForms(forms);
+    }
+    
   }
   
   useEffect(()=>{
@@ -31,7 +34,7 @@ const page = () => {
         ?
         <div className='grid grid-cols-4 gap-5'>
         {
-          form.map((item, i) => {
+          form?.map((item, i) => {
             return (
               <FormDisplay form={item} />
             )

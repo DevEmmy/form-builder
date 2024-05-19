@@ -39,6 +39,9 @@ interface AuthenticatedRequest extends NextApiRequest {
     try {
       const decoded = verify(token, process.env.JWT_SECRET as string) as User;
       (req as any).user = decoded; // Type assertion for user property
+      if(!decoded.id){
+        return NextResponse.json({ message: 'Unauthorized' });
+      }
       return decoded;
     } catch (error) {
       return NextResponse.json({ message: 'Unauthorized' });
